@@ -4,8 +4,8 @@
  * @author Mateus Pires Lustosa
  */
 
-public interface AlgorithmRunner {
+public interface SortAlgorithmRunner {
 
-	public <T extends Comparable<T>> long run(T[] items);
+	public <T extends Comparable<T>> void run(T[] items);
 	
 }

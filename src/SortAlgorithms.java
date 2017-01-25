@@ -1,12 +1,12 @@
+import java.util.Arrays;
+
 /**
- * Implementação dos algoritmos: Selection Sort, Insertion Sort, ShellSort, QuickSort.
+ * Implementação dos algoritmos: Selection Sort, Insertion Sort, QuickSort, MergeSort e HeapSort.
  * 
  * @author Mateus Pires Lustosa
  */
 
 public class SortAlgorithms {
-	
-	private static final boolean EVERY_ATTR = true;
 	
 	private static <T> void swap(T[] items, int i, int j)
 	{
@@ -15,36 +15,22 @@ public class SortAlgorithms {
 		items[j] = value;
 	}
 
-	public static <T extends Comparable<T>> long selection(T[] items)
+	public static <T extends Comparable<T>> void selection(T[] items)
 	{
-		long swapCount = 0;
-		
 		for (int i = 0; i < items.length; i++)
 		{
 			int smaller = i;
 			
 			for (int j = i + 1; j < items.length; j++)
-			{
 				if (items[j].compareTo(items[smaller]) < 0)
-				{
 					smaller = j;
-				}
-			}
 			
-			if (i != smaller)
-			{
-				swap(items, i, smaller);
-				swapCount++;
-			}
+			if (i != smaller) swap(items, i, smaller);
 		}
-		
-		return swapCount;
 	}
 
-	public static <T extends Comparable<T>> long insertion(T[] items)
+	public static <T extends Comparable<T>> void insertion(T[] items)
 	{
-		long swapCount = 0;
-		
 		for (int i = 1; i < items.length; i++)
 		{
 			T value = items[i];
@@ -54,111 +40,50 @@ public class SortAlgorithms {
 			{
 				items[j] = items[j - 1];
 				j--;
-				if (EVERY_ATTR) swapCount++;
 			}
 			
-			if (i != j)
-			{
-				items[j] = value;
-				if (!EVERY_ATTR) swapCount++;
-			}
+			if (i != j) items[j] = value;
 		}
-		
-		return swapCount;
 	}
-
-	private static int getJump(int length)
+	
+	public interface PivotFinder<T extends Comparable<T>> {
+		public int find(T[] items, int left, int right);
+	}
+	
+	public static <T extends Comparable<T>> void quick(T[] items, PivotFinder<T> pivot)
 	{
-		int jump = 1;
-		int next = 1;
-		
-		while (next < length)
-		{
-			jump = next;
-			next = jump * 3 + 1;
-		}
-		
-		return jump;
-	}
-
-	private static int previousJump(int jump) { return (jump - 1) / 3; }
-	
-	public static <T extends Comparable<T>> long shell(T[] items)
-	{
-		long swapCount = 0;
-		int jump = getJump(items.length);
-		
-		while (jump > 0)
-		{
-			for (int i = jump; i < items.length; i++)
-			{
-				T value = items[i];
-				int j = i;
-				
-				while (j >= jump && value.compareTo(items[j - jump]) < 0)
-				{
-					items[j] = items[j - jump];
-					j -= jump;
-					if (EVERY_ATTR) swapCount++;
-				}
-				
-				if (i != j)
-				{
-					items[j] = value;
-					if (!EVERY_ATTR) swapCount++;					
-				}
-			}
-			
-			jump = previousJump(jump);
-		}
-		
-		return swapCount;
+		quick_sort(items, 0, items.length - 1, pivot);
 	}
 	
-	public interface PivotFinder {
-		public <T extends Comparable<T>> int find(T[] items, int left, int right);
-	}
-	
-	public <T extends Comparable<T>> int sort(T[] items, int left, int right, PivotFinder pivot)
+	private static <T extends Comparable<T>> void quick_sort(T[] items, int left, int right, PivotFinder<T> pivot)
 	{
 		int pivIndex = pivot.find(items, left, right);
-		int compareCount = right - left;
-		
-		//System.out.println("piv[" + pivIndex + "]: " + items[pivIndex]);
-		//System.out.println("< >: " + left + ", " + right);
 		
 		for (int i = left; i <= right; i++)
 		{
-			//System.out.println("i[" + i + "]: " + items[i]);
-			
 			int j = i;
 			int diff = items[j].compareTo(items[pivIndex]); 
 			
-			//System.out.println("\t\tj: " + j + ", pi: " + pivIndex);
-			if (diff < 0) {
+			if (diff < 0)
+			{
 				if (j > pivIndex)
 				{
 					T value = items[j];
 					
-					do
-					{
-						items[j] = items[j - 1];
-					}
+					do items[j] = items[j - 1];
 					while (--j > pivIndex);
 					
 					items[j] = value;
 					pivIndex++;
 				}
 			}
-			else if (diff > 0) {
+			else if (diff > 0)
+			{
 				if (j < pivIndex)
 				{
 					T value = items[j];
 					
-					do
-					{
-						items[j] = items[j + 1];
-					}
+					do items[j] = items[j + 1];
 					while (++j < pivIndex);
 					
 					items[j] = value;
@@ -166,19 +91,90 @@ public class SortAlgorithms {
 					i--;
 				}
 			}
-			
-			/*for (T it : items) {
-				System.out.print(it + ", ");
-			} System.out.println();*/
 		}
 		
 		if (pivIndex - 1 > left)
-			compareCount += sort(items, left, pivIndex - 1, pivot);
+			quick_sort(items, left, pivIndex - 1, pivot);
 
 		if (pivIndex + 1 < right)
-			compareCount += sort(items, pivIndex + 1, right, pivot);
+			quick_sort(items, pivIndex + 1, right, pivot);
+	}
+	
+	public static <T extends Comparable<T>> void merge(T[] list)
+	{
+		merge_sort(list, 0, list.length - 1);
+	}
+	
+	public static <T extends Comparable<T>> void merge_sort(T[] list, int begin, int end)
+	{
+		int half = (begin + end) / 2;
 		
-		return compareCount;
+		if (end != half)
+		{
+			if (begin != half)
+			{
+				merge_sort(list, begin, half);
+				merge_sort(list, half + 1, end);
+			}
+			
+			merge_merge(list, begin, end, half);
+		}
+	}
+	
+	private static <T extends Comparable<T>> void merge_merge(T[] list, int begin, int end, int half)
+	{
+		T[] left = Arrays.copyOfRange(list, begin, half + 1);
+		int leftIndex = 0, rightIndex = half + 1;
+		
+		for (int i = begin; i <= end; i++)
+		{
+			if (leftIndex < left.length && rightIndex <= end)
+			{
+				if (left[leftIndex].compareTo(list[rightIndex]) <= 0)
+					list[i] = left[leftIndex++];
+				else
+					list[i] = list[rightIndex++];
+			}
+			
+			else if (leftIndex < left.length)
+				list[i] = left[leftIndex++];
+			
+			else
+				list[i] = list[rightIndex++];
+		}
+	}
+	
+	public static <T extends Comparable<T>> void heap(T[] list)
+	{
+		for (int i = list.length / 2 - 1; i >= 0; i--)
+			heap_lower(list, i, list.length);
+		
+        int limit = list.length;
+
+        for (int i = list.length - 1; i > 0; i--)
+        {
+        	swap(list, i, 0);
+        	heap_lower(list, 0, --limit);
+        }
+	}
+	
+	private static <T extends Comparable<T>> void heap_lower(T[] list, int index, int limit)
+	{
+		int child = 2 * index + 1;
+		
+        while (child < limit)
+        {
+            if (child + 1 < limit && list[child].compareTo(list[child + 1]) < 0)
+                child++;
+            
+            if (list[child].compareTo(list[index]) > 0)
+            {
+                swap(list, child, index);
+                index = child;
+                child = 2 * child + 1;
+            }
+            else break;
+        }
 	}
 	
 }

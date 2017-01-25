@@ -6,42 +6,64 @@
  */
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Program {
 
-	private static final String ERROR_MESSAGE = "Uso: sort_algorithms n\nParâmetros:\n\tn - número de itens na lista, n >= 1"; 
+	private static final String ERROR_MESSAGE = "Uso:\n\tn - número do algorítmo"; 
 	
 	public static void main(String[] args)
-	{	
-		if (args.length == 0)
-		{
-			Scanner scanner = new Scanner(System.in);
-			analyse(scanner.nextInt());
-			scanner.close();
-		}
-		else if (args.length == 1)
-		{
-			try {
-				analyse(Integer.parseInt(args[1]));
+	{
+		try {
+			if (args.length == 0)
+			{
+				Scanner scanner = new Scanner(System.in);
+				int n = scanner.nextInt();
+				scanner.close();
+				
+				Example[] data = Example.generateData(n);
+				Analyse[] analyses = new Analyser<Example>(algorithms).analyse(data);
+				
+				printAnalyses(analyses);
 			}
-			catch (NumberFormatException nfe) {
+			else if (args.length == 1)
+			{
+				int algorithmNumber = Integer.parseInt(args[0]);
+				analyse(new Integer[0], algorithms[algorithmNumber]);
+			}
+			else
+			{
 				System.out.println(ERROR_MESSAGE);
 			}
 		}
-		else
-		{
+		catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(ERROR_MESSAGE);
 		}
 	}
 	
-	private static void analyse(int n)
+	@SuppressWarnings({ "unchecked" })
+	private static <T extends Comparable<T>> void analyse(T[] type, SortAlgorithmRunner algorithm)
 	{
-		Student[] data = Student.generateData(n);
-		Analyse[] analyses = new Analyser(algorithms).analyse(data);
+		Scanner scanner = new Scanner(System.in);
+		List<T> list = new ArrayList<T>();
 		
+		while (scanner.hasNextInt())
+		{
+			if (type instanceof Integer[])
+				list.add((T) (Integer) scanner.nextInt());
+			
+			else if (type instanceof String[])
+				list.add((T) scanner.nextLine());
+		}
+		
+		scanner.close();
+		
+		T[] data = list.toArray(type);
+		algorithm.run(data);
 		printArray(data);
-		printAnalyses(analyses);
 	}
 	
 	private static void printAnalyses(Analyse[] analyses)
@@ -49,7 +71,6 @@ public class Program {
 		for (int i = 0; i < analyses.length; i++)
 			System.out.println(
 					algorithmsNames[i] + ": " +
-					new DecimalFormat("#.##").format(analyses[i].getSwapCount()).replace(",", ".") + " " +
 					new DecimalFormat("#.##").format(analyses[i].getTime()).replace(",", ".")
 				);
 	}
@@ -57,34 +78,51 @@ public class Program {
 	public static <T> void printArray(T[] array)
 	{
 		for (int i = 0; i < array.length; i++)
-		{
 			System.out.println(array[i]);
-		}
-		
-		System.out.println("");
+	}
+	
+	public static <T> void printArray(T[] array, int begin, int end)
+	{
+		for (int i = begin; i <= end; i++)
+			System.out.println(array[i]);
 	}
 
-	private static String[] algorithmsNames = new String[] {
-			"Bubble",
+	private static final String[] algorithmsNames = new String[] {
 			"Selection",
 			"Insertion",
-			"Shell"
+			"Quick",
+			"Merge",
+			"Heap"
 		};
 	
-	private static AlgorithmRunner[] algorithms = new AlgorithmRunner[] {
-			new AlgorithmRunner() {
-				public <T extends Comparable<T>> long run(T[] items) {
-					return SortAlgorithms.selection(items);
+	private static final SortAlgorithmRunner[] algorithms = new SortAlgorithmRunner[] {
+			new SortAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortAlgorithms.selection(items);
 				}
 			},
-			new AlgorithmRunner() {
-				public <T extends Comparable<T>> long run(T[] items) {
-					return SortAlgorithms.insertion(items);
+			new SortAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortAlgorithms.insertion(items);
 				}
 			},
-			new AlgorithmRunner() {
-				public <T extends Comparable<T>> long run(T[] items) {
-					return SortAlgorithms.shell(items);
+			new SortAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortAlgorithms.quick(items, new SortAlgorithms.PivotFinder<T>() {
+						public int find(T[] items, int left, int right) {
+							return (left + right) / 2; 
+						}
+					});
+				}
+			},
+			new SortAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortAlgorithms.merge(items);
+				}
+			},
+			new SortAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortAlgorithms.heap(items);
 				}
 			}
 		};

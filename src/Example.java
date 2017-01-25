@@ -6,41 +6,41 @@
 
 import java.util.Random;
 
-public class Student implements Comparable<Student> {
+public class Example implements Comparable<Example> {
 
 	private int id;
 	private String name;
-	private int year;
 
-	public Student(int matricula, String name, int year)
+	public Example(int matricula, String name, int year)
 	{
 		this.id = matricula;
 		this.name = name;
-		this.year = year;
 	}
 
 	public int getId() { return id; }
 	public String getName() { return name; }
-	public int getYear() { return year; }
 	
-	public int compareTo(Student that)
+	public int compareTo(Example that)
 	{
-		return this.id - that.id;
+		int id = this.id - that.id;
+		if (id != 0) return id;
+		
+		return this.name.compareTo(that.name);
 	}
 	
 	public String toString()
 	{
-		return "{ " + id + ", " + name + ", " + year + " }";
+		return "{ " + id + ", " + name + " }";
 	}
 	
-	public static Student[] generateData(int length)
+	public static Example[] generateData(int length)
 	{
-		Student[] data = new Student[length];
+		Example[] data = new Example[length];
 		Random rnd = new Random();
 		
 		while (--length >= 0)
 		{
-			data[length] = new Student(
+			data[length] = new Example(
 				100000 + rnd.nextInt(899999),
 				getRandomName(rnd) + " " + getRandomName(rnd),
 				1980 + rnd.nextInt(36)
