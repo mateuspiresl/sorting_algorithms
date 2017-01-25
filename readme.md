@@ -38,7 +38,7 @@ Runs all algorithms.
 With input from file `in.txt`
 
 ```
-    python run.py 0 in.txt out.txt
+    python run_mult.py in.txt out.txt
 ```
 
 As output:
