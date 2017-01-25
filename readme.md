@@ -34,6 +34,8 @@ Runs all algorithms.
     python run_mult.py file_in file_out
 ```
 
+The output files will be named as the file name (before the dot), appended with *_[algorithm_name]* and the file format, if exists.
+
 ##### Example
 With input from file `in.txt`
 
