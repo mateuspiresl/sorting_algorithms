@@ -98,17 +98,17 @@ public class Program {
 	private static final SortAlgorithmRunner[] algorithms = new SortAlgorithmRunner[] {
 			new SortAlgorithmRunner() {
 				public <T extends Comparable<T>> void run(T[] items) {
-					SortAlgorithms.selection(items);
+					SortingAlgorithms.selection(items);
 				}
 			},
 			new SortAlgorithmRunner() {
 				public <T extends Comparable<T>> void run(T[] items) {
-					SortAlgorithms.insertion(items);
+					SortingAlgorithms.insertion(items);
 				}
 			},
 			new SortAlgorithmRunner() {
 				public <T extends Comparable<T>> void run(T[] items) {
-					SortAlgorithms.quick(items, new SortAlgorithms.PivotFinder<T>() {
+					SortingAlgorithms.quick(items, new SortingAlgorithms.PivotFinder<T>() {
 						public int find(T[] items, int left, int right) {
 							return (left + right) / 2; 
 						}
@@ -117,12 +117,12 @@ public class Program {
 			},
 			new SortAlgorithmRunner() {
 				public <T extends Comparable<T>> void run(T[] items) {
-					SortAlgorithms.merge(items);
+					SortingAlgorithms.merge(items);
 				}
 			},
 			new SortAlgorithmRunner() {
 				public <T extends Comparable<T>> void run(T[] items) {
-					SortAlgorithms.heap(items);
+					SortingAlgorithms.heap(items);
 				}
 			}
 		};

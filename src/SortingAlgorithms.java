@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author Mateus Pires Lustosa
  */
 
-public class SortAlgorithms {
+public class SortingAlgorithms {
 	
 	private static <T> void swap(T[] items, int i, int j)
 	{
