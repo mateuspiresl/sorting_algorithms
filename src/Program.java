@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Program {
 
-	private static final String ERROR_MESSAGE = "Uso:\n\tn - número do algorítmo"; 
+	private static final String ERROR_MESSAGE = "Uso:\n\tn - numero do algoritmo"; 
 	
 	public static void main(String[] args)
 	{
