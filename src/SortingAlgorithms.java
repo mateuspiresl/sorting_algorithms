@@ -1,11 +1,12 @@
 import java.util.Arrays;
 
 /**
- * Implementação dos algoritmos: Selection Sort, Insertion Sort, QuickSort, MergeSort e HeapSort.
+ * Provides sorting methods.
+ * The algorithms includes Selection sort, Insertion sort, QuickSort,
+ * MergeSort and HeapSort.
  * 
  * @author Mateus Pires Lustosa
  */
-
 public class SortingAlgorithms {
 	
 	private static <T> void swap(T[] items, int i, int j)

@@ -1,25 +1,43 @@
+import java.util.Random;
+
 /**
- * Classe dos dados.
+ * Data class for exemplification of use.
+ * Holds simple data and provides method to automatically generate
+ * random data.
  * 
  * @author Mateus Pires Lustosa
  */
-
-import java.util.Random;
-
 public class Example implements Comparable<Example> {
 
 	private int id;
 	private String name;
 
-	public Example(int matricula, String name, int year)
+	/**
+	 * Constructor.
+	 * @param id the ID.
+	 * @param name the name.
+	 */
+	public Example(int id, String name)
 	{
-		this.id = matricula;
+		this.id = id;
 		this.name = name;
 	}
 
+	/**
+	 * Returns the ID.
+	 * @return the ID.
+	 */
 	public int getId() { return id; }
+	/**
+	 * Returns the name.
+	 * @return the name.
+	 */
 	public String getName() { return name; }
 	
+	/**
+	 * Comparable method.
+	 * @see Comparable#compareTo(Object)
+	 */
 	public int compareTo(Example that)
 	{
 		int id = this.id - that.id;
@@ -28,11 +46,21 @@ public class Example implements Comparable<Example> {
 		return this.name.compareTo(that.name);
 	}
 	
+	/**
+	 * String representation method.
+	 * @see Object#toString()
+	 */
+	@Override
 	public String toString()
 	{
 		return "{ " + id + ", " + name + " }";
 	}
 	
+	/**
+	 * Generates random Example data.
+	 * @param length the amount of data to generate.
+	 * @return the data array.
+	 */
 	public static Example[] generateData(int length)
 	{
 		Example[] data = new Example[length];
@@ -41,21 +69,25 @@ public class Example implements Comparable<Example> {
 		while (--length >= 0)
 		{
 			data[length] = new Example(
-				100000 + rnd.nextInt(899999),
-				getRandomName(rnd) + " " + getRandomName(rnd),
-				1980 + rnd.nextInt(36)
+				1 + rnd.nextInt(Integer.MAX_VALUE),
+				getRandomName(rnd) + " " + getRandomName(rnd)
 			);
 		}
 		
 		return data;
 	}
 	
-	private static String getRandomName(Random rnd)
-	{
+	/**
+	 * Returns an random name from the random names list.
+	 * @param rnd the Random instance to use.
+	 * @return a random name.
+	 */
+	private static String getRandomName(Random rnd) {
 		return names[rnd.nextInt(names.length)];
 	}
 	
-	private static String[] names = new String[] {
+	// Random names list
+	public static final String[] names = new String[] {
 		"Banana", "Maçã", "Laranja", "Morango", "Pêra", "Uva", "Mamão", "Cajú", "Goiaba", "Acerola", "Maracujá",
 		"Uno", "Palio", "Civic", "Frontier", "Corsa", "Celta", "Hilux", "Montana", "Ferrari",
 		"Branco", "Amarelo", "Vermelho", "Verde", "Laranja", "Azul", "Roxo", "Ciano", "Preto"

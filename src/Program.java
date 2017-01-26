@@ -1,22 +1,24 @@
-/**
- * Classe principal.
- * Programa que gera dados e testa cada algoritmo para um dado tamanho da lista.
- * 
- * @author Mateus Pires Lustosa (Matrícula: 11408115) 
- */
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main class.
+ * Program that analyzes sorting algorithms and sorts data.
+ * 
+ * @author Mateus Pires Lustosa 
+ */
 public class Program {
 
-	private static final String ERROR_MESSAGE = "Uso:\n\tn - numero do algoritmo"; 
+	private static final String ERROR_MESSAGE = "Use:\n\tn - algorithm number"; 
 	
 	public static void main(String[] args)
 	{
 		try {
+			// If no argument is provided, the first input is
+			// taken as the amount of random data to generate
+			// and prints the analysis
 			if (args.length == 0)
 			{
 				Scanner scanner = new Scanner(System.in);
@@ -24,15 +26,17 @@ public class Program {
 				scanner.close();
 				
 				Example[] data = Example.generateData(n);
-				Analyse[] analyses = new Analyser<Example>(algorithms).analyse(data);
+				Analysis[] analyses = new Analyzer<Example>(algorithms).analyze(data);
 				
 				printAnalyses(analyses);
 			}
+			// If one is given, it's taken as the algorithm index.
 			else if (args.length == 1)
 			{
 				int algorithmNumber = Integer.parseInt(args[0]);
-				analyse(new Integer[0], algorithms[algorithmNumber]);
+				analyze(new Integer[0], algorithms[algorithmNumber]);
 			}
+			// Otherwise, the error message will be printed.
 			else
 			{
 				System.out.println(ERROR_MESSAGE);
@@ -44,8 +48,13 @@ public class Program {
 		}
 	}
 	
+	/**
+	 * Sort data from the input.
+	 * @param type the data type.
+	 * @param algorithm the index of the algorithm to use. 
+	 */
 	@SuppressWarnings({ "unchecked" })
-	private static <T extends Comparable<T>> void analyse(T[] type, SortAlgorithmRunner algorithm)
+	private static <T extends Comparable<T>> void analyze(T[] type, SortAlgorithmRunner algorithm)
 	{
 		Scanner scanner = new Scanner(System.in);
 		List<T> list = new ArrayList<T>();
@@ -66,7 +75,7 @@ public class Program {
 		printArray(data);
 	}
 	
-	private static void printAnalyses(Analyse[] analyses)
+	private static void printAnalyses(Analysis[] analyses)
 	{
 		for (int i = 0; i < analyses.length; i++)
 			System.out.println(
@@ -87,6 +96,7 @@ public class Program {
 			System.out.println(array[i]);
 	}
 
+	// List of algorithms
 	private static final String[] algorithmsNames = new String[] {
 			"Selection",
 			"Insertion",
@@ -95,6 +105,7 @@ public class Program {
 			"Heap"
 		};
 	
+	// List of the algorithm's running interfaces
 	private static final SortAlgorithmRunner[] algorithms = new SortAlgorithmRunner[] {
 			new SortAlgorithmRunner() {
 				public <T extends Comparable<T>> void run(T[] items) {

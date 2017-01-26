@@ -1,27 +1,26 @@
+import java.util.Arrays;
+
 /**
- * Classe que faz a análise dos algoritmos.
+ * Provides methods to analyze sorting algorithms.
  * 
  * @author Mateus Pires Lustosa
  */
-
-import java.util.Arrays;
-
-public class Analyser<T extends Comparable<T>> {
+public class Analyzer<T extends Comparable<T>> {
 
 	private SortAlgorithmRunner[] algorithms;
 	
-	public Analyser(SortAlgorithmRunner[] algorithms) {
+	public Analyzer(SortAlgorithmRunner[] algorithms) {
 		this.algorithms = algorithms;
 	}
 	
 	/**
-	 * Analisa cada algoritmo com a array de items dada.
-	 * @param items - dados.
-	 * @return a Analyse de cada algoritmo.
+	 * Analyzes each algorithm on the data.
+	 * @param items - data.
+	 * @return the Analyze of each algorithm.
 	 */
-	public Analyse[] analyse(T[] items)
+	public Analysis[] analyze(T[] items)
 	{
-		Analyse[] analyses = new Analyse[this.algorithms.length];
+		Analysis[] analyses = new Analysis[this.algorithms.length];
 		
 		T[] sortedData = Arrays.copyOf(items, items.length);
 		Arrays.sort(sortedData);
@@ -33,7 +32,7 @@ public class Analyser<T extends Comparable<T>> {
 			
 			this.algorithms[alg].run(data);
 			
-			analyses[alg] = new Analyse(System.currentTimeMillis() - time, 1);
+			analyses[alg] = new Analysis(System.currentTimeMillis() - time, 1);
 			
 			if (!Arrays.equals(data, sortedData))
 				throw new AlgorithmResultException();
