@@ -17,8 +17,9 @@ public class Program {
 	{
 		try {
 			// If no argument is provided, the first input is
-			// taken as the amount of random data to generate
-			// and prints the analysis
+			// taken as the amount of random data to generate.
+			// The analysis of the sorting algorithms on that
+			// data is printed in the end.
 			if (args.length == 0)
 			{
 				Scanner scanner = new Scanner(System.in);
@@ -59,7 +60,11 @@ public class Program {
 		Scanner scanner = new Scanner(System.in);
 		List<T> list = new ArrayList<T>();
 		
-		while (scanner.hasNextInt())
+		// The first integer is the number of entries
+		int n = scanner.nextInt();
+		
+		// Reads n entries
+		while (n-- > 0)
 		{
 			if (type instanceof Integer[])
 				list.add((T) (Integer) scanner.nextInt());
