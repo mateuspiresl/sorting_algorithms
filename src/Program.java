@@ -35,7 +35,19 @@ public class Program {
 			else if (args.length == 1)
 			{
 				int algorithmNumber = Integer.parseInt(args[0]);
-				analyze(new Integer[0], algorithms[algorithmNumber]);
+				Scanner scanner = new Scanner(System.in);
+
+				// The first integer is the number of entries
+				int n = scanner.nextInt();
+				Integer[] data = new Integer[n];
+				
+				// Reads n entries
+				while (n-- > 0) data[n] = scanner.nextInt();
+				
+				scanner.close();
+				
+				algorithms[algorithmNumber].run(data);
+				printArray(data);
 			}
 			// Otherwise, the error message will be printed.
 			else
@@ -55,29 +67,9 @@ public class Program {
 	 * @param algorithm the index of the algorithm to use. 
 	 */
 	@SuppressWarnings({ "unchecked" })
-	private static <T extends Comparable<T>> void analyze(T[] type, SortAlgorithmRunner algorithm)
+	private static <T extends Comparable<T>> void analyze(SortAlgorithmRunner algorithm, T[] data)
 	{
-		Scanner scanner = new Scanner(System.in);
-		List<T> list = new ArrayList<T>();
 		
-		// The first integer is the number of entries
-		int n = scanner.nextInt();
-		
-		// Reads n entries
-		while (n-- > 0)
-		{
-			if (type instanceof Integer[])
-				list.add((T) (Integer) scanner.nextInt());
-			
-			else if (type instanceof String[])
-				list.add((T) scanner.nextLine());
-		}
-		
-		scanner.close();
-		
-		T[] data = list.toArray(type);
-		algorithm.run(data);
-		printArray(data);
 	}
 	
 	private static void printAnalyses(Analysis[] analyses)

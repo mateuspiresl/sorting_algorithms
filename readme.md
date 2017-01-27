@@ -13,10 +13,10 @@ python build.py
 Example file:
 ```
 n			// the entry size
-entry_1		// each entry
-entry_2		// ...
-entry_3		// ...
+entry_1		// entry 1
+entry_2		// entry 2
 ...
+entry_n		// entry n
 ```
 
 ### One algorithm
