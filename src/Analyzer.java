@@ -15,8 +15,11 @@ public class Analyzer<T extends Comparable<T>> {
 	
 	/**
 	 * Analyzes each algorithm on the data.
-	 * @param items - data.
+	 * @param items data.
 	 * @return the Analyze of each algorithm.
+	 * @throws AlgorithmResultException if the result of an algorithm is
+	 * 		   different from the result of the
+	 * 		   {@link Arrays#sort(Object[]) Java's sorting algorithm}
 	 */
 	public Analysis[] analyze(T[] items)
 	{
