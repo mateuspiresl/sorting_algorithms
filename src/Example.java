@@ -88,9 +88,19 @@ public class Example implements Comparable<Example> {
 	
 	// Random names list
 	public static final String[] names = new String[] {
-		"Banana", "Maçã", "Laranja", "Morango", "Pêra", "Uva", "Mamão", "Cajú", "Goiaba", "Acerola", "Maracujá",
-		"Uno", "Palio", "Civic", "Frontier", "Corsa", "Celta", "Hilux", "Montana", "Ferrari",
-		"Branco", "Amarelo", "Vermelho", "Verde", "Laranja", "Azul", "Roxo", "Ciano", "Preto"
+			"Bradford", "Lawson", "Frank", "Robinson", "Dennis", "Fernandez", "Woodrow", "Daniel", 
+			"Vickie", "Douglas", "Ted", "Cole", "Joel", "Jackson", "Harriet", "Blair", 
+			"Keith", "Waters", "Antonia", "Shelton", "Lori", "Jefferson", "Roy", "Owens", 
+			"Eula", "Kelly", "Courtney", "Carpenter", "Gerald", "Reid", "Joy", "Mcbride", 
+			"Margaret", "Greer", "Rosemary", "Foster", "Latoya", "Keller", "Tara", "Gutierrez", 
+			"Lance", "Hamilton", "Robert", "Swanson", "Jeffrey", "Jennings", "Stuart", "Flowers", 
+			"Dianne", "Harrington", "Roberto", "Lucas", "Amy", "Cain", "Conrad", "Norman", 
+			"Penny", "Ward", "Ramon", "Stevens", "Terry", "Salazar", "Claudia", "Rodriguez", 
+			"Theodore", "Tucker", "Ian", "Hayes", "Nathaniel", "Wright", "Paula", "Martinez", 
+			"Kara", "Bass", "Salvador", "Terry", "Wendy", "Jacobs", "Yolanda", "Francis", 
+			"Virginia", "Benson", "Irma", "Wilson", "Edna", "Strickland", "Eileen", "Hale", 
+			"Rolando", "Peters", "Charlotte", "Blake", "Chester", "Paul", "Marvin", "Wilkerson", 
+			"Dwayne", "Lee", "Clinton", "Patterson"
 	};
 	
 }
