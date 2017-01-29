@@ -6,7 +6,18 @@
 python build.py
 ```
 
-## Run
+## Test
+
+```
+python test.py <size>
+```
+
+Where *_size* is the amount of data to generate and run on every algorithm.
+
+This prints the time that each algorithm took to sort the same generated data.
+On case of errors, a message indicating will be displayed.
+
+## Assisgnment 01
 
 ### The input
 
@@ -19,43 +30,45 @@ entry_2		// entry 2
 entry_n		// entry n
 ```
 
-### One algorithm
+### Run one algorithm
 
-- 0: Selection sort
-- 1: Insertion sort
-- 2: QuickSort
-- 3: MergeSort
-- 4: HeapSort
+- 1: Selection sort
+- 2: Insertion sort
+- 3: QuickSort
+- 4: MergeSort
+- 5: HeapSort
 
 ```
-python run.py alg_number file_in file_out
+python assign_01.py <alg_number> <file_in> <file_out>
 ```
 
 ##### Example
 
-To run algorithm `0`, selection sort, with input from file `in.txt`
+To run algorithm `0`, selection sort, with input from file `in.txt` to file `out.txt`:
 
 ```
 python run.py 0 in.txt out.txt
 ```
 
-### Multiple algorithms
-Runs all algorithms.
+### Run multiple algorithms
+
+Runs all algorithms and generate output files for each.
 
 ```
-python run_mult.py file_in file_out
+python run_mult.py <file_in> <file_out>
 ```
 
 The output files will be named as the file name (before the dot), appended with *_[algorithm_name]* and the file format, if exists.
 
 ##### Example
-With input from file `in.txt`
+
+With input from file `in.txt` to file `out.txt`:
 
 ```
 python run_mult.py in.txt out.txt
 ```
 
-As output:
+Will generate the files:
 
 `out_selection.txt`
 `out_insertion.txt`

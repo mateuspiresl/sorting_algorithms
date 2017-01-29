@@ -3,6 +3,6 @@
  * 
  * @author Mateus Pires Lustosa
  */
-public interface SortAlgorithmRunner {
+public interface SortingAlgorithmRunner {
 	public <T extends Comparable<T>> void run(T[] items);
 }

@@ -7,9 +7,9 @@ import java.util.Arrays;
  */
 public class Analyzer<T extends Comparable<T>> {
 
-	private SortAlgorithmRunner[] algorithms;
+	private SortingAlgorithmRunner[] algorithms;
 	
-	public Analyzer(SortAlgorithmRunner[] algorithms) {
+	public Analyzer(SortingAlgorithmRunner[] algorithms) {
 		this.algorithms = algorithms;
 	}
 	
