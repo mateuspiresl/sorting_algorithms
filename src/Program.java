@@ -34,7 +34,7 @@ public class Program {
 			// If one is given, it's taken as the algorithm index.
 			else if (args.length == 1)
 			{
-				int algorithmNumber = Integer.parseInt(args[0]);
+				int algorithmNumber = Integer.parseInt(args[0]) - 1;
 				Scanner scanner = new Scanner(System.in);
 
 				// The first integer is the number of entries
