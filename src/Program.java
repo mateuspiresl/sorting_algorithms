@@ -1,6 +1,4 @@
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -59,17 +57,6 @@ public class Program {
 			e.printStackTrace();
 			System.out.println(ERROR_MESSAGE);
 		}
-	}
-	
-	/**
-	 * Sort data from the input.
-	 * @param type the data type.
-	 * @param algorithm the index of the algorithm to use. 
-	 */
-	@SuppressWarnings({ "unchecked" })
-	private static <T extends Comparable<T>> void analyze(SortAlgorithmRunner algorithm, T[] data)
-	{
-		
 	}
 	
 	private static void printAnalyses(Analysis[] analyses)
