@@ -34,9 +34,9 @@ public class Test {
 			}
 			
 			Example[] data = Example.generateData(size);
-			Analysis[] analyses = new Analyzer<Example>(Util.algorithms).analyze(data);
+			Analysis[] analyses = new Analyzer(Util.algorithms).analyze(data);
 			
-			Util.printAnalyses(analyses);
+			Util.printAnalysis(analyses);
 		}
 		catch (AlgorithmResultException are) {
 			are.printStackTrace();
