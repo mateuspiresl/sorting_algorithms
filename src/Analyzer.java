@@ -5,7 +5,7 @@ import java.util.Arrays;
  * 
  * @author Mateus Pires Lustosa
  */
-public class Analyzer<T extends Comparable<T>> {
+public class Analyzer {
 
 	private SortingAlgorithmRunner[] algorithms;
 	
@@ -21,7 +21,7 @@ public class Analyzer<T extends Comparable<T>> {
 	 * 		   different from the result of the
 	 * 		   {@link Arrays#sort(Object[]) Java's sorting algorithm}
 	 */
-	public Analysis[] analyze(T[] items)
+	public <T extends Comparable<T>> Analysis[] analyze(T[] items)
 	{
 		Analysis[] analyses = new Analysis[this.algorithms.length];
 		

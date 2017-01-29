@@ -10,7 +10,7 @@ public class Util {
 	
 	private Util() { }
 	
-	public static void printAnalyses(Analysis[] analyses)
+	public static void printAnalysis(Analysis[] analyses)
 	{
 		for (int i = 0; i < analyses.length; i++)
 			System.out.println(
