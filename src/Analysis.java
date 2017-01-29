@@ -1,7 +1,7 @@
 /**
  * Class to hold and process analysis data.
  * 
- * @author Mateus Pires Lustosa
+ * @author Mateus Pires Lustosa - mateusplpl@gmail.com
  */
 public class Analysis {
 
@@ -24,5 +24,13 @@ public class Analysis {
 	 * @return the average time.
 	 */
 	public double getTime() { return time / (double) runs; }
+
+	/**
+	 * @see Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "{ time: " + time + ", runs: " + runs + " }";
+	}
 	
 }
