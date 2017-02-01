@@ -32,8 +32,8 @@ def task(this_params, size, output):
 in_folder = sys.argv[1]
 
 if len(sys.argv) > 2:
-	print 'Output to file ../' + sys.argv[2]
-	output = open('../' + sys.argv[2], 'w')
+	print 'Output to file ' + sys.argv[2]
+	output = open(sys.argv[2], 'w')
 else:
 	output = sys.stdout
 
