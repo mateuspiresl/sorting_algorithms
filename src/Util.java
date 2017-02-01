@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
 /**
  * Main class.
@@ -9,6 +10,50 @@ import java.text.DecimalFormat;
 public class Util {
 	
 	private Util() { }
+
+	// List of algorithms
+	public static final String[] algorithmsNames = new String[] {
+			"Java's",
+			"Selection",
+			"Insertion",
+			"Quick",
+			"Merge",
+			"Heap"
+		};
+	
+	// List of the algorithm's running interfaces
+	public static final SortingAlgorithmRunner[] algorithms = new SortingAlgorithmRunner[] {
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					Arrays.sort(items);
+				}
+			},
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortingAlgorithms.selection(items);
+				}
+			},
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortingAlgorithms.insertion(items);
+				}
+			},
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortingAlgorithms.quick(items);
+				}
+			},
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortingAlgorithms.merge(items);
+				}
+			},
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] items) {
+					SortingAlgorithms.heap(items);
+				}
+			}
+		};
 	
 	public static void printAnalysis(Analysis[] analyses)
 	{
@@ -30,47 +75,5 @@ public class Util {
 		for (int i = begin; i <= end; i++)
 			System.out.println(array[i]);
 	}
-
-	// List of algorithms
-	public static final String[] algorithmsNames = new String[] {
-			"Selection",
-			"Insertion",
-			"Quick",
-			"Merge",
-			"Heap"
-		};
-	
-	// List of the algorithm's running interfaces
-	public static final SortingAlgorithmRunner[] algorithms = new SortingAlgorithmRunner[] {
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.selection(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.insertion(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.quick(items, new SortingAlgorithms.PivotFinder<T>() {
-						public int find(T[] items, int left, int right) {
-							return (left + right) / 2; 
-						}
-					});
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.merge(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.heap(items);
-				}
-			}
-		};
 	
 }

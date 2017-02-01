@@ -21,12 +21,16 @@ public class Analyzer {
 	 * 		   different from the result of the
 	 * 		   {@link Arrays#sort(Object[]) Java's sorting algorithm}
 	 */
-	public <T extends Comparable<T>> Analysis[] analyze(T[] items)
+	public <T extends Comparable<T>> Analysis[] analyze(T[] items, boolean check)
 	{
 		Analysis[] analyses = new Analysis[this.algorithms.length];
 		
-		T[] sortedData = Arrays.copyOf(items, items.length);
-		Arrays.sort(sortedData);
+		T[] sortedData = null;
+		if (check)
+		{
+			sortedData = Arrays.copyOf(items, items.length);
+			Arrays.sort(sortedData);
+		}
 		
 		for (int alg = 0; alg < this.algorithms.length; alg++)
 		{
@@ -35,9 +39,10 @@ public class Analyzer {
 			
 			this.algorithms[alg].run(data);
 			
-			analyses[alg] = new Analysis(System.currentTimeMillis() - time, 1);
+			time = System.currentTimeMillis() - time;
+			analyses[alg] = new Analysis(time, 1);
 			
-			if (!Arrays.equals(data, sortedData))
+			if (check && !Arrays.equals(data, sortedData))
 				throw new AlgorithmResultException();
 		}
 		
