@@ -119,7 +119,7 @@ python assign_02.py --commented <file_1> <file_2> <...> <file_n>
 
 `--ignore=<algorithm_1><algorithm_2><...><algorithm_n>`
 
-To ignore algorithms, list them on the value of the attribute `ignore`.
+To ignore algorithms, list them on the value of this flag.
 
 ##### Example
 
