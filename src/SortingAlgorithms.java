@@ -47,60 +47,6 @@ public class SortingAlgorithms {
 		}
 	}
 	
-	public interface PivotFinder<T extends Comparable<T>> {
-		public int find(T[] items, int left, int right);
-	}
-	
-	public static <T extends Comparable<T>> void quick(T[] items, PivotFinder<T> pivot)
-	{
-		quick_sort(items, 0, items.length - 1, pivot);
-	}
-	
-	private static <T extends Comparable<T>> void quick_sort(T[] items, int left, int right, PivotFinder<T> pivot)
-	{
-		int pivIndex = pivot.find(items, left, right);
-		
-		for (int i = left; i <= right; i++)
-		{
-			int j = i;
-			int diff = items[j].compareTo(items[pivIndex]); 
-			
-			if (diff < 0)
-			{
-				if (j > pivIndex)
-				{
-					T value = items[j];
-					
-					do items[j] = items[j - 1];
-					while (--j > pivIndex);
-					
-					items[j] = value;
-					pivIndex++;
-				}
-			}
-			else if (diff > 0)
-			{
-				if (j < pivIndex)
-				{
-					T value = items[j];
-					
-					do items[j] = items[j + 1];
-					while (++j < pivIndex);
-					
-					items[j] = value;
-					pivIndex--;
-					i--;
-				}
-			}
-		}
-		
-		if (pivIndex - 1 > left)
-			quick_sort(items, left, pivIndex - 1, pivot);
-
-		if (pivIndex + 1 < right)
-			quick_sort(items, pivIndex + 1, right, pivot);
-	}
-	
 	public static <T extends Comparable<T>> void merge(T[] list)
 	{
 		merge_sort(list, 0, list.length - 1);
@@ -177,5 +123,61 @@ public class SortingAlgorithms {
             else break;
         }
 	}
+	
+	/**
+	 * Sort an array using the Quicksort algorithm.
+	 * @param items the array to sort.
+	 */
+	public static <T extends Comparable<T>> void quick(T[] items) {
+        quick_sort(items, 0, items.length - 1);
+    }
+    
+	/**
+	 * Sort an array using the Quicksort algorithm.
+	 * @param items the array to sort.
+	 * @param begin the array's first element.
+	 * @param end the array's last element. 
+	 */
+    private static <T extends Comparable<T>> void quick_sort(T[] items, int begin, int end)
+    {
+        if (begin < end)
+        {
+            int pivot = quick_partition(items, begin, end);
+            
+            quick_sort(items, begin, pivot - 1);
+            quick_sort(items, pivot + 1, end);
+        }
+    }
+ 
+    /**
+     * Divide a subarray in two groups, one smaller than the pivot,
+     * and one larger. The pivot is the last element.
+     * @param items the array being sorted.
+     * @param begin the first element index of the subarray.
+     * @param end the last element index of the subarray.
+     * @return the pivot index.
+     */
+    private static <T extends Comparable<T>> int quick_partition(T[] items, int begin, int end)
+    {
+    	// Takes the last element as the pivot
+        T pivot = items[end];
+        int marker = begin;
+        
+        // Puts all elements smaller than the pivot, before the marker
+        for (int i = begin; i < end; i++) {
+            if (items[i].compareTo(pivot) <= 0)
+            {
+                swap(items, marker, i);
+                marker++;
+            }
+        }
+
+        // The marker is the first element larger than the pivot
+        // Makes the pivot be between the division 
+        swap(items, marker, end);
+        
+        // After the movement, the marker points to the pivot
+        return marker;
+    }
 	
 }
