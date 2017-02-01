@@ -1,42 +1,26 @@
-import java.util.Scanner;
-
 public class Test {
 	
 	/**
 	 * Makes analysis of random data on every algorithm.
 	 * The size of the data must be provided in the command
-	 * line arguments, as the first argument, or in the
-	 * standard input.
-	 * 
+	 * line arguments, as the first argument. 
 	 * @param args the size of the data to generate.
 	 */
 	public static void main(String[] args)
 	{
 		try {
-			int size;
-			
-			// If no argument is provided, get the size from the
-			// standard input
-			if (args.length == 0)
+			if (args.length == 1)
 			{
-				Scanner scanner = new Scanner(System.in);
-				size = scanner.nextInt();
-				scanner.close();
+				int size = Integer.parseInt(args[0]);
+				Example[] data = Example.generateData(size);
+				Analysis[] analyses = new Analyzer(Util.algorithms).analyze(data, true);
+				
+				Util.printAnalysis(analyses);
+				System.out.println("Success.");
 			}
-			else if (args.length == 1)
-			{
-				size = Integer.parseInt(args[0]);
-			}
-			else
-			{
+			else {
 				System.out.println("Invalid arguments");
-				return;
 			}
-			
-			Example[] data = Example.generateData(size);
-			Analysis[] analyses = new Analyzer(Util.algorithms).analyze(data);
-			
-			Util.printAnalysis(analyses);
 		}
 		catch (AlgorithmResultException are) {
 			are.printStackTrace();
