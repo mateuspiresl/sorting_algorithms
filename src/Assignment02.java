@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  * @author Mateus Pires Lustosa - mateusplpl@gmail.com
  */
 public class Assignment02 {
-
+	
 	private static final Pattern ARG_IGNORED = Pattern.compile("^--ignored=.*", Pattern.CASE_INSENSITIVE); 
 	
 	// Indicates if the output can have comments
@@ -59,7 +60,7 @@ public class Assignment02 {
 		
 		// Selected algorithms
 		int selected = ~0;
-		SortingAlgorithmRunner[] algorithms = Util.algorithms;
+		IntegerSortingAlgorithmRunner[] algorithms = Util.integerAlgorithms;
 		
 		// The replacement for the ignored algorithm
 		// Null value means space ignored 
@@ -73,22 +74,22 @@ public class Assignment02 {
 		{
 			if (args[index].startsWith("--ignore="))
 			{
-				List<SortingAlgorithmRunner> algorithmsList = new ArrayList<SortingAlgorithmRunner>();
+				List<IntegerSortingAlgorithmRunner> algorithmsList = new ArrayList<IntegerSortingAlgorithmRunner>();
 				String algorithmsNumbers = args[index].substring(9);
 				
 				for (char number : algorithmsNumbers.toCharArray())
 					selected &= ~(1 << (number - '0'));
 				
-				for (int i = 0; i < Util.algorithms.length; i++) {
+				for (int i = 0; i < algorithms.length; i++) {
 					if ((selected & (1 << i)) != 0)
 					{
 						comment("Include " + Util.algorithmsNames[i]);
-						algorithmsList.add(Util.algorithms[i]);
+						algorithmsList.add(algorithms[i]);
 					}
 					else comment("Ignore " + Util.algorithmsNames[i]);
 				}
 
-				algorithms = algorithmsList.toArray(new SortingAlgorithmRunner[0]);
+				algorithms = algorithmsList.toArray(new IntegerSortingAlgorithmRunner[0]);
 			}
 			
 			else if (ARG_IGNORED.matcher(args[index]).matches())
@@ -132,9 +133,9 @@ public class Assignment02 {
 				for (index++; index < args.length; index++)
 				{
 					int size = Integer.parseInt(args[index]);
-					Integer[] data = generateRandomIntegers(size);
+					int[] data = generateRandomIntegers(size);
 					
-					Analysis[] an = new Analyzer(algorithms).analyze(data, false);
+					Analysis[] an = analyze(algorithms, data, false);
 					comment("", false);
 					if (commented) printAsCSVLine(an, selected, ignored);
 					
@@ -157,14 +158,14 @@ public class Assignment02 {
 					Scanner scanner = new Scanner(file);
 					
 					int size = scanner.nextInt();
-					Integer[] data = generateRandomIntegers(size);
+					int[] data = new int[size];
 					
 					while (--size >= 0)
 						data[size] = scanner.nextInt();
 					
 					scanner.close();
 					
-					Analysis[] an = new Analyzer(algorithms).analyze(data, false);
+					Analysis[] an = analyze(algorithms, data, false);
 					comment("", false);
 					if (commented) printAsCSVLine(an, selected, ignored);
 					
@@ -214,10 +215,38 @@ public class Assignment02 {
 		}
 	}
 	
-	public static Integer[] generateRandomIntegers(int size)
+	private static Analysis[] analyze(IntegerSortingAlgorithmRunner[] algorithms, int[] items, boolean check)
+	{
+		Analysis[] analyses = new Analysis[algorithms.length];
+		
+		int[] sortedData = null;
+		if (check)
+		{
+			sortedData = Arrays.copyOf(items, items.length);
+			Arrays.sort(sortedData);
+		}
+		
+		for (int alg = 0; alg < algorithms.length; alg++)
+		{
+			int[] data = Arrays.copyOf(items, items.length);
+			long time = System.currentTimeMillis();
+			
+			algorithms[alg].run(data);
+			
+			time = System.currentTimeMillis() - time;
+			analyses[alg] = new Analysis(time, 1);
+			
+			if (check && !Arrays.equals(data, sortedData))
+				throw new AlgorithmResultException();
+		}
+		
+		return analyses;
+	}
+	
+	public static int[] generateRandomIntegers(int size)
 	{
 		Random rnd = new Random();
-		Integer[] data = new Integer[size];
+		int[] data = new int[size];
 		
 		while (--size >= 0)
 			data[size] = rnd.nextInt();

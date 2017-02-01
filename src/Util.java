@@ -55,6 +55,39 @@ public class Util {
 			}
 		};
 	
+	public static final IntegerSortingAlgorithmRunner[] integerAlgorithms = new IntegerSortingAlgorithmRunner[] {
+			new IntegerSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					Arrays.sort(items);
+				}
+			},
+			new IntegerSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntegerSortingAlgorithms.selection(items);
+				}
+			},
+			new IntegerSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntegerSortingAlgorithms.insertion(items);
+				}
+			},
+			new IntegerSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntegerSortingAlgorithms.quick(items);
+				}
+			},
+			new IntegerSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntegerSortingAlgorithms.merge(items);
+				}
+			},
+			new IntegerSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntegerSortingAlgorithms.heap(items);
+				}
+			}
+		};
+	
 	public static void printAnalysis(Analysis[] analyses)
 	{
 		for (int i = 0; i < analyses.length; i++)
