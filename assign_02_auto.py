@@ -7,7 +7,7 @@ ignored = ['--ignore=12', '--ignored=']
 params = ['--average']
 
 def task(this_params, size, output):
-	if size != '100000':
+	if size == '1000000':
 		this_params = ignored + this_params
 
 	this_params = commented + this_params
@@ -42,8 +42,10 @@ if not in_folder.endswith('/'):
 
 size = False
 input_files = False
+files = os.listdir(in_folder)
+files.sort()
 
-for file in os.listdir(in_folder):
+for file in files:
 	tokens = file.split('.')
 	print tokens
 
