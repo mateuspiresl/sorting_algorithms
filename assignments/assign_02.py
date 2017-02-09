@@ -5,9 +5,14 @@ import shlex
 def task(args, output):
 	_index = 0
 	_input = ''
+	_program = 'Assignment02'
 
 	while args[_index].startswith('--'):
-		_input += ' ' + args[_index]
+		if args[_index] == '--integer':
+			_program = 'Assignment02Integer'
+		else:
+			_input += ' ' + args[_index]
+		
 		_index += 1
 
 	_input += ' --file'
@@ -15,7 +20,9 @@ def task(args, output):
 	for _i in xrange(_index, len(args)):
 		_input += ' ../' + args[_i]
 
-	_cmd = 'cd bin/ && java Assignment02' + _input
+	_cmd = 'cd bin/ && java ' + _program + _input
+	print _cmd
+	sys.stdout.flush()
 
 	if output == False:
 		return subprocess.Popen(shlex.split(_cmd), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

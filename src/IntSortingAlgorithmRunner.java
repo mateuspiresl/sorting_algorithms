@@ -3,6 +3,6 @@
  * 
  * @author Mateus Pires Lustosa
  */
-public interface IntegerSortingAlgorithmRunner {
+public interface IntSortingAlgorithmRunner {
 	public void run(int[] items);
 }

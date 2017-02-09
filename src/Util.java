@@ -55,35 +55,35 @@ public class Util {
 			}
 		};
 	
-	public static final IntegerSortingAlgorithmRunner[] integerAlgorithms = new IntegerSortingAlgorithmRunner[] {
-			new IntegerSortingAlgorithmRunner() {
+	public static final IntSortingAlgorithmRunner[] intAlgorithms = new IntSortingAlgorithmRunner[] {
+			new IntSortingAlgorithmRunner() {
 				public void run(int[] items) {
 					Arrays.sort(items);
 				}
 			},
-			new IntegerSortingAlgorithmRunner() {
+			new IntSortingAlgorithmRunner() {
 				public void run(int[] items) {
-					IntegerSortingAlgorithms.selection(items);
+					IntSortingAlgorithms.selection(items);
 				}
 			},
-			new IntegerSortingAlgorithmRunner() {
+			new IntSortingAlgorithmRunner() {
 				public void run(int[] items) {
-					IntegerSortingAlgorithms.insertion(items);
+					IntSortingAlgorithms.insertion(items);
 				}
 			},
-			new IntegerSortingAlgorithmRunner() {
+			new IntSortingAlgorithmRunner() {
 				public void run(int[] items) {
-					IntegerSortingAlgorithms.quick(items);
+					IntSortingAlgorithms.quick(items);
 				}
 			},
-			new IntegerSortingAlgorithmRunner() {
+			new IntSortingAlgorithmRunner() {
 				public void run(int[] items) {
-					IntegerSortingAlgorithms.merge(items);
+					IntSortingAlgorithms.merge(items);
 				}
 			},
-			new IntegerSortingAlgorithmRunner() {
+			new IntSortingAlgorithmRunner() {
 				public void run(int[] items) {
-					IntegerSortingAlgorithms.heap(items);
+					IntSortingAlgorithms.heap(items);
 				}
 			}
 		};

@@ -60,7 +60,7 @@ public class Assignment02 {
 		
 		// Selected algorithms
 		int selected = ~0;
-		IntegerSortingAlgorithmRunner[] algorithms = Util.integerAlgorithms;
+		IntSortingAlgorithmRunner[] algorithms = Util.intAlgorithms;
 		
 		// The replacement for the ignored algorithm
 		// Null value means space ignored 
@@ -74,7 +74,7 @@ public class Assignment02 {
 		{
 			if (args[index].startsWith("--ignore="))
 			{
-				List<IntegerSortingAlgorithmRunner> algorithmsList = new ArrayList<IntegerSortingAlgorithmRunner>();
+				List<IntSortingAlgorithmRunner> algorithmsList = new ArrayList<IntSortingAlgorithmRunner>();
 				String algorithmsNumbers = args[index].substring(9);
 				
 				for (char number : algorithmsNumbers.toCharArray())
@@ -89,7 +89,7 @@ public class Assignment02 {
 					else comment("Ignore " + Util.algorithmsNames[i]);
 				}
 
-				algorithms = algorithmsList.toArray(new IntegerSortingAlgorithmRunner[0]);
+				algorithms = algorithmsList.toArray(new IntSortingAlgorithmRunner[0]);
 			}
 			
 			else if (ARG_IGNORED.matcher(args[index]).matches())
@@ -215,7 +215,7 @@ public class Assignment02 {
 		}
 	}
 	
-	private static Analysis[] analyze(IntegerSortingAlgorithmRunner[] algorithms, int[] items, boolean check)
+	private static Analysis[] analyze(IntSortingAlgorithmRunner[] algorithms, int[] items, boolean check)
 	{
 		Analysis[] analyses = new Analysis[algorithms.length];
 		
@@ -270,7 +270,7 @@ public class Assignment02 {
 			if ((selected & (1 << i)) != 0)
 			{
 				if (i != 0) System.out.print(",");
-				System.out.print(analysis[analysisIndex++].getTime() / 1000);
+				System.out.print((long) analysis[analysisIndex++].getTime());
 			}
 			else if (ignored != null)
 			{

@@ -7,7 +7,7 @@ import java.util.Arrays;
  * 
  * @author Mateus Pires Lustosa
  */
-public class IntegerSortingAlgorithms {
+public class IntSortingAlgorithms {
 	
 	private static void swap(int[] items, int i, int j)
 	{
@@ -51,7 +51,7 @@ public class IntegerSortingAlgorithms {
 		merge_sort(list, 0, list.length - 1);
 	}
 	
-	public static void merge_sort(int[] list, int begin, int end)
+	private static void merge_sort(int[] list, int begin, int end)
 	{
 		int half = (begin + end) / 2;
 		
