@@ -6,6 +6,12 @@
 python build.py
 ```
 
+### Linux only
+
+```
+bash build.sh
+```
+
 ## Test
 
 ```
@@ -177,4 +183,26 @@ If the script in ran with the flag `--commented`, the comment output will not be
 
 ```
 python assign_02_auto.py <folder> [output_file]
+```
+
+## Assignment 03
+
+Implementation of Counting sort, Bucket sort and Radix sort.
+
+### Run one algorithm
+
+- 1: Counting sort
+- 2: Bucket sort
+- 3: Radix sort
+
+```
+python assign_03.py <algorithm_number>
+```
+
+##### Example
+
+To run algorithm `0`, Counting sort, with input from file `in.txt` to file `out.txt`:
+
+```
+python assign_03.py 0 < in.txt > out.txt
 ```
