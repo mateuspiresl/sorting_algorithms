@@ -1,3 +1,4 @@
+package algorithms.analysis;
 /**
  * Exception thrown when the result from an sorting algorithm method
  * is different from the result of the Java's sorting method. 

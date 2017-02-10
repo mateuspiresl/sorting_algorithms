@@ -1,3 +1,4 @@
+package algorithms.analysis;
 /**
  * Class to hold and process analysis data.
  * 

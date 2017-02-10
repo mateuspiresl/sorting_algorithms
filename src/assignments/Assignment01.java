@@ -1,5 +1,11 @@
+package assignments;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import algorithms.SortingAlgorithmRunner;
+import algorithms.SortingAlgorithms;
+import algorithms.Util;
 
 /**
  * APA - Assignment 01 
@@ -9,6 +15,40 @@ import java.util.Scanner;
 public class Assignment01 {
 
 	private static final String ERROR_MESSAGE = "Use:\n\tn - algorithm number"; 
+
+	// List of the algorithm's running interfaces
+		public static final SortingAlgorithmRunner[] algorithms = new SortingAlgorithmRunner[] {
+				new SortingAlgorithmRunner() {
+					public <T extends Comparable<T>> void run(T[] items) {
+						Arrays.sort(items);
+					}
+				},
+				new SortingAlgorithmRunner() {
+					public <T extends Comparable<T>> void run(T[] items) {
+						SortingAlgorithms.selection(items);
+					}
+				},
+				new SortingAlgorithmRunner() {
+					public <T extends Comparable<T>> void run(T[] items) {
+						SortingAlgorithms.insertion(items);
+					}
+				},
+				new SortingAlgorithmRunner() {
+					public <T extends Comparable<T>> void run(T[] items) {
+						SortingAlgorithms.quick(items);
+					}
+				},
+				new SortingAlgorithmRunner() {
+					public <T extends Comparable<T>> void run(T[] items) {
+						SortingAlgorithms.merge(items);
+					}
+				},
+				new SortingAlgorithmRunner() {
+					public <T extends Comparable<T>> void run(T[] items) {
+						SortingAlgorithms.heap(items);
+					}
+				}
+			};
 	
 	public static void main(String[] args)
 	{
@@ -27,7 +67,7 @@ public class Assignment01 {
 				
 				scanner.close();
 				
-				Util.algorithms[algorithmNumber].run(data);
+				algorithms[algorithmNumber].run(data);
 				Util.printArray(data);
 			}
 			else System.out.println(ERROR_MESSAGE);

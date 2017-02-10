@@ -1,5 +1,8 @@
+package algorithms;
 import java.text.DecimalFormat;
-import java.util.Arrays;
+import java.util.Random;
+
+import algorithms.analysis.Analysis;
 
 /**
  * Main class.
@@ -21,73 +24,6 @@ public class Util {
 			"Heap"
 		};
 	
-	// List of the algorithm's running interfaces
-	public static final SortingAlgorithmRunner[] algorithms = new SortingAlgorithmRunner[] {
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					Arrays.sort(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.selection(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.insertion(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.quick(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.merge(items);
-				}
-			},
-			new SortingAlgorithmRunner() {
-				public <T extends Comparable<T>> void run(T[] items) {
-					SortingAlgorithms.heap(items);
-				}
-			}
-		};
-	
-	public static final IntSortingAlgorithmRunner[] intAlgorithms = new IntSortingAlgorithmRunner[] {
-			new IntSortingAlgorithmRunner() {
-				public void run(int[] items) {
-					Arrays.sort(items);
-				}
-			},
-			new IntSortingAlgorithmRunner() {
-				public void run(int[] items) {
-					IntSortingAlgorithms.selection(items);
-				}
-			},
-			new IntSortingAlgorithmRunner() {
-				public void run(int[] items) {
-					IntSortingAlgorithms.insertion(items);
-				}
-			},
-			new IntSortingAlgorithmRunner() {
-				public void run(int[] items) {
-					IntSortingAlgorithms.quick(items);
-				}
-			},
-			new IntSortingAlgorithmRunner() {
-				public void run(int[] items) {
-					IntSortingAlgorithms.merge(items);
-				}
-			},
-			new IntSortingAlgorithmRunner() {
-				public void run(int[] items) {
-					IntSortingAlgorithms.heap(items);
-				}
-			}
-		};
-	
 	public static void printAnalysis(Analysis[] analyses)
 	{
 		for (int i = 0; i < analyses.length; i++)
@@ -95,6 +31,12 @@ public class Util {
 					algorithmsNames[i] + ": " +
 					new DecimalFormat("#.##").format(analyses[i].getTime()).replace(",", ".")
 				);
+	}
+	
+	public static void printArray(int[] array)
+	{
+		for (int i = 0; i < array.length; i++)
+			System.out.println(array[i]);
 	}
 	
 	public static <T> void printArray(T[] array)
@@ -107,6 +49,28 @@ public class Util {
 	{
 		for (int i = begin; i <= end; i++)
 			System.out.println(array[i]);
+	}
+	
+	public static int[] generateRandomIntegers(int size) {
+		return generateRandomIntegers(size, true);
+	}
+	
+	public static int[] generateRandomIntegers(int size, boolean signed) {
+		return generateRandomIntegers(size, signed, Integer.MAX_VALUE);
+	}
+	
+	public static int[] generateRandomIntegers(int size, boolean signed, int mod)
+	{
+		Random rnd = new Random();
+		int[] data = new int[size];
+		
+		while (--size >= 0)
+		{			
+			data[size] = rnd.nextInt() % mod;
+			if (!signed && data[size] < 0) data[size] = -data[size];
+		}
+		
+		return data;
 	}
 	
 }

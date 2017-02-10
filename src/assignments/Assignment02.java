@@ -1,3 +1,4 @@
+package assignments;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,6 +8,12 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import algorithms.IntSortingAlgorithmRunner;
+import algorithms.IntSortingAlgorithms;
+import algorithms.Util;
+import algorithms.analysis.AlgorithmResultException;
+import algorithms.analysis.Analysis;
+
 /**
  * APA - Assignment 02
  * 
@@ -15,6 +22,39 @@ import java.util.regex.Pattern;
 public class Assignment02 {
 	
 	private static final Pattern ARG_IGNORED = Pattern.compile("^--ignored=.*", Pattern.CASE_INSENSITIVE); 
+	
+	public static final IntSortingAlgorithmRunner[] intAlgorithms = new IntSortingAlgorithmRunner[] {
+			new IntSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					Arrays.sort(items);
+				}
+			},
+			new IntSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntSortingAlgorithms.selection(items);
+				}
+			},
+			new IntSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntSortingAlgorithms.insertion(items);
+				}
+			},
+			new IntSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntSortingAlgorithms.quick(items);
+				}
+			},
+			new IntSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntSortingAlgorithms.merge(items);
+				}
+			},
+			new IntSortingAlgorithmRunner() {
+				public void run(int[] items) {
+					IntSortingAlgorithms.heap(items);
+				}
+			}
+		};
 	
 	// Indicates if the output can have comments
 	private static boolean commented = false;
@@ -60,7 +100,7 @@ public class Assignment02 {
 		
 		// Selected algorithms
 		int selected = ~0;
-		IntSortingAlgorithmRunner[] algorithms = Util.intAlgorithms;
+		IntSortingAlgorithmRunner[] algorithms = intAlgorithms;
 		
 		// The replacement for the ignored algorithm
 		// Null value means space ignored 
@@ -133,7 +173,7 @@ public class Assignment02 {
 				for (index++; index < args.length; index++)
 				{
 					int size = Integer.parseInt(args[index]);
-					int[] data = generateRandomIntegers(size);
+					int[] data = Util.generateRandomIntegers(size);
 					
 					Analysis[] an = analyze(algorithms, data, false);
 					comment("", false);
@@ -243,17 +283,6 @@ public class Assignment02 {
 		return analyses;
 	}
 	
-	public static int[] generateRandomIntegers(int size)
-	{
-		Random rnd = new Random();
-		int[] data = new int[size];
-		
-		while (--size >= 0)
-			data[size] = rnd.nextInt();
-		
-		return data;
-	}
-	
 	public static void comment(String text, boolean breakLine) {
 		if (commented) System.out.print(">> " + text + (breakLine ? "\n" : ""));
 	}
@@ -265,7 +294,7 @@ public class Assignment02 {
 	private static void printAsCSVLine(Analysis[] analysis, int selected, String ignored)
 	{
 		int analysisIndex = 0;
-		for (int i = 0; i < Util.algorithms.length; i++)
+		for (int i = 0; i < intAlgorithms.length; i++)
 		{
 			if ((selected & (1 << i)) != 0)
 			{

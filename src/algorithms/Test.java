@@ -1,3 +1,11 @@
+package algorithms;
+
+import algorithms.analysis.AlgorithmResultException;
+import algorithms.analysis.Analysis;
+import algorithms.analysis.Analyzer;
+import algorithms.analysis.Example;
+import assignments.Assignment01;
+
 public class Test {
 	
 	/**
@@ -13,7 +21,7 @@ public class Test {
 			{
 				int size = Integer.parseInt(args[0]);
 				Example[] data = Example.generateData(size);
-				Analysis[] analyses = new Analyzer(Util.algorithms).analyze(data, true);
+				Analysis[] analyses = new Analyzer(Assignment01.algorithms).analyze(data, true);
 				
 				Util.printAnalysis(analyses);
 				System.out.println("Success.");
