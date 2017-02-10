@@ -287,52 +287,39 @@ public class IntSortingAlgorithms {
      */
     public static void radix(int[] list)
     {
-    	String[] unordered = new String[list.length];
-    	int max = 0;
+    	int[] unordered = list;
+    	int[] ordered = new int[list.length];
     	
-    	for (int i = 0; i < list.length; i++)
-    	{
-    		unordered[i] = String.valueOf(list[i]);
-    		
-    		if (unordered[i].length() > max)
-    			max = unordered[i].length();
-    	}
-    	
-    	String[] ordered = new String[list.length];
-    	
-    	for (int digit = 0; digit < max; digit++)
+    	for (int digit = 0;; digit++)
     	{
     		int[] numbers = new int[10];
+    		int power = (int) Math.pow(10, digit);
     		
-    		for (int i = 0; i < list.length; i++)
+    		for (int i = 0; i < unordered.length; i++)
     		{
-    			if (digit < unordered[i].length())
-    				numbers[unordered[i].charAt(unordered[i].length() - digit - 1) - '0']++;
-    			else
-    				numbers[0]++;
+    			int index = unordered[i] % (power * 10) / power;
+    			numbers[index]++;
     		}
     		
     		for (int i = 1; i < 10; i++)
     			numbers[i] += numbers[i - 1];
     		
+    		if (numbers[0] == numbers[9])
+    			break;
+    		
     		for (int i = unordered.length - 1; i >= 0; i--)
     		{
-    			int index;
-    			
-    			if (digit < unordered[i].length())
-    				index = unordered[i].charAt(unordered[i].length() - digit - 1) - '0';
-    			else
-    				index = 0;
-    			
+    			int index = unordered[i] % (power * 10) / power;
     			ordered[--numbers[index]] = unordered[i];
     		}
     		
-    		String[] temp = ordered;
+    		int[] temp = ordered;
     		ordered = unordered;
     		unordered = temp;
     	}
     	
-    	for (int i = 0; i < list.length; i++)
-    		list[i] = Integer.valueOf(unordered[i]);
+    	if (unordered != list)
+    		for (int i = 0; i < list.length; i++)
+    			list[i] = unordered[i];
     }
 }
