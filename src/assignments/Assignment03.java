@@ -41,7 +41,7 @@ public class Assignment03
 	{
 		int index = 0;
 		
-		if (args[index].equalsIgnoreCase("--commented"))
+		if (args.length > 0 && args[index].equalsIgnoreCase("--commented"))
 		{
 			commentsAllowed = true;
 			comment("Output commented");
@@ -51,15 +51,15 @@ public class Assignment03
 		// -1 means all the algorithm
 		int algorithmNumber = -1;
 		
-		if (!args[index].equalsIgnoreCase("--all"))
+		if (args.length > 0 && !args[index].equalsIgnoreCase("--all"))
 			algorithmNumber = Integer.parseInt(args[index]);
 		
 		index++;
 		
-		if (args[index].equalsIgnoreCase("--test"))
+		if (args.length == 0 || args[index].equalsIgnoreCase("--test"))
 		{
 			comment("Testing");
-			test(Integer.parseInt(args[index + 1]), algorithmNumber);
+			test(args.length == 0 ? 10000000 : Integer.parseInt(args[index + 1]), algorithmNumber);
 		}
 		else if (args[index].equalsIgnoreCase("--file"))
 		{
