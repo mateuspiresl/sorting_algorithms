@@ -1,4 +1,7 @@
+package algorithms;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Provides sorting methods.
@@ -178,5 +181,158 @@ public class IntSortingAlgorithms {
         // After the movement, the marker points to the pivot
         return marker;
     }
+    
+    /**
+     * Sort an array of int using Radix sort algorithm.
+     * @param list the array to sort.
+     */
+    public static void counting(int[] list)
+    {
+    	int min = list[0];
+    	int max = list[0];
+    	
+    	for (int i = 1; i < list.length; i++)
+    	{
+    		if (list[i] < min) min = list[i];
+    		else if (list[i] > max) max = list[i];
+    	}
+    	
+    	counting(Arrays.copyOf(list, list.length), list, min, max); 
+    }
+    
+    /**
+     * Sort an array of int using Radix sort algorithm.
+     * @param list the array to sort.
+     * @param sorted the result array. Must be of the same size or larger.
+     * @param max the maximum value found in the elements of the array.
+     */
+    public static void counting(int[] list, int[] sorted, int max) {
+    	counting(list, sorted, 0, max);
+    }
+    
+    /**
+     * Sort an array of int using Radix sort algorithm.
+     * @param list the array to sort.
+     * @param sorted the result array. Must be of the same size or larger.
+     * @param min the minimum value found in the array.
+     * @param max the maximum value found in the array.
+     */
+    public static void counting(int[] list, int[] sorted, int min, int max)
+    {
+    	int[] order = new int[max - min + 1];
+    	
+    	for (int i = 0; i < list.length; i++)
+    		order[list[i] - min]++;
+    	
+    	for (int i = 1; i < order.length; i++)
+    		order[i] += order[i - 1];
+    	
+    	for (int i = list.length - 1; i >= 0; i--)
+    	{
+    		int index = --order[list[i] - min];
+    		sorted[index] = list[i];
+    	}
+    }
 	
+    /**
+     * Sort an array of int using the Bucket sort algorithm.
+     * @param list the array to sort.
+     */
+    public static void bucket(int[] list)
+    {
+    	int max = list[0];
+    	
+    	for (int i = 1; i < list.length; i++)
+    		if (list[i] > max) max = list[i];
+    	
+    	bucket(list, max);
+    }
+    
+    /**
+     * 
+     * Sort an array of int using the Bucket sort algorithm.
+     * @param list the array to sort.
+     * @param max the maximum value found in the array.
+     */
+    public static void bucket(int[] list, int max)
+    {
+    	int numBuckets = Math.min(max / 5, list.length / 10);
+    	int bestCapacity = list.length / numBuckets;
+    	
+    	@SuppressWarnings("unchecked")
+		List<Integer>[] buckets = new ArrayList[numBuckets];
+    	
+    	for (int i = 0; i < buckets.length; i++)
+    		buckets[i] = new ArrayList<Integer>(bestCapacity);
+    	
+    	for (int i = 0; i < list.length; i++)
+    	{
+    		float perc = list[i] / (float) (max + 1);
+    		buckets[perc >= 1f ? numBuckets - 1 : (int) (perc * numBuckets)].add(list[i]);
+    	}
+    	
+    	for (int i = 0; i < buckets.length; i++)
+    		SortingAlgorithms.quick(buckets[i]);
+    	
+    	int i = 0;
+    	
+		for (List<Integer> bucket : buckets)
+			for (int value : bucket)
+				list[i++] = value;
+    }
+    
+    /**
+     * Sort an array of int using the Radix sort algorithm.
+     * @param list the array to sort.
+     */
+    public static void radix(int[] list)
+    {
+    	String[] unordered = new String[list.length];
+    	int max = 0;
+    	
+    	for (int i = 0; i < list.length; i++)
+    	{
+    		unordered[i] = String.valueOf(list[i]);
+    		
+    		if (unordered[i].length() > max)
+    			max = unordered[i].length();
+    	}
+    	
+    	String[] ordered = new String[list.length];
+    	
+    	for (int digit = 0; digit < max; digit++)
+    	{
+    		int[] numbers = new int[10];
+    		
+    		for (int i = 0; i < list.length; i++)
+    		{
+    			if (digit < unordered[i].length())
+    				numbers[unordered[i].charAt(unordered[i].length() - digit - 1) - '0']++;
+    			else
+    				numbers[0]++;
+    		}
+    		
+    		for (int i = 1; i < 10; i++)
+    			numbers[i] += numbers[i - 1];
+    		
+    		for (int i = unordered.length - 1; i >= 0; i--)
+    		{
+    			int index;
+    			
+    			if (digit < unordered[i].length())
+    				index = unordered[i].charAt(unordered[i].length() - digit - 1) - '0';
+    			else
+    				index = 0;
+    			
+    			ordered[--numbers[index]] = unordered[i];
+    		}
+    		
+    		String[] temp = ordered;
+    		ordered = unordered;
+    		unordered = temp;
+    	}
+    	
+    	for (int i = 0; i < list.length; i++)
+    		list[i] = Integer.valueOf(unordered[i]);
+    }
 }

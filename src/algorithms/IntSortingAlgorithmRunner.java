@@ -1,3 +1,4 @@
+package algorithms;
 /**
  * Interface to run an sorting algorithm on an array.
  * 
