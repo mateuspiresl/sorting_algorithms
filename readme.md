@@ -34,6 +34,10 @@ entry_2     // entry 2
 entry_n     // entry n
 ```
 
+### Running assignments
+
+Get inside `assignments/` folder to run assignment's python scripts, don't run directly from the project folder or from anywhere else.
+
 ## Assisgnment 01
 
 Provides Selection sort, Insertion sort, QuickSort, MergeSort and HeapSort algorithms.
@@ -55,7 +59,7 @@ python assign_01.py <alg_number> <file_in> <file_out>
 To run algorithm `0`, selection sort, with input from file `in.txt` to file `out.txt`:
 
 ```
-python run.py 0 in.txt out.txt
+python assign_01.py 0 in.txt out.txt
 ```
 
 ### Run multiple algorithms
@@ -63,7 +67,7 @@ python run.py 0 in.txt out.txt
 Runs all algorithms and generate output files for each.
 
 ```
-python run_mult.py <file_in> <file_out>
+python assign_01_mult.py <file_in> <file_out>
 ```
 
 The output files will be named as the file name (before the dot), appended with *_[algorithm_name]* and the file format, if exists.
@@ -73,7 +77,7 @@ The output files will be named as the file name (before the dot), appended with 
 With input from file `in.txt` to file `out.txt`:
 
 ```
-python run_mult.py in.txt out.txt
+python assign_01_mult.py in.txt out.txt
 ```
 
 Will generate the files:
