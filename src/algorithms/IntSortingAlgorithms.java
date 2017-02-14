@@ -257,13 +257,13 @@ public class IntSortingAlgorithms {
     public static void bucket(int[] list, int max)
     {
     	int numBuckets = Math.min(max / 5, list.length / 10);
-    	int bestCapacity = list.length / numBuckets;
+    	// int bestCapacity = list.length / numBuckets;
     	
     	@SuppressWarnings("unchecked")
 		List<Integer>[] buckets = new ArrayList[numBuckets];
     	
     	for (int i = 0; i < buckets.length; i++)
-    		buckets[i] = new ArrayList<Integer>(bestCapacity);
+    		buckets[i] = new ArrayList<Integer>();
     	
     	for (int i = 0; i < list.length; i++)
     	{
@@ -272,7 +272,7 @@ public class IntSortingAlgorithms {
     	}
     	
     	for (int i = 0; i < buckets.length; i++)
-    		SortingAlgorithms.quick(buckets[i]);
+    		SortingAlgorithms.heap(buckets[i]);
     	
     	int i = 0;
     	
@@ -322,4 +322,30 @@ public class IntSortingAlgorithms {
     		for (int i = 0; i < list.length; i++)
     			list[i] = unordered[i];
     }
+    
+    /**
+     * @author João Lucas
+     */
+	public static void shell(int list[])
+	{
+		int h = 1;
+		
+		while (h < list.length / 3)
+			h = h * 3 + 1;
+		
+		while (h > 0) {
+			for(int i = h; i < list.length; i++)
+			{
+				int aux = list[i];
+				
+				int j;
+				for (j = i; j >= h && list[j - h] > aux; j-= h)
+					list[j] = list[j - h];
+				
+				list[j] = aux;
+			}
+			
+			h /= 3;
+		}
+	}
 }

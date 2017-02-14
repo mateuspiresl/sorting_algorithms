@@ -352,5 +352,50 @@ public class SortingAlgorithms {
         // After the movement, the marker points to the pivot
         return marker;
     }
-	
+    
+    /**
+     * Sort an array of int using the Radix sort algorithm.
+     * @param list the array to sort.
+     */
+    public static void radix(String[] list)
+    {
+    	String[] unordered = list;
+    	String[] ordered = new String[list.length];
+    	
+    	int max = 0;
+    	for (int i = 0; i < unordered.length; i++)
+    		if (unordered[i].length() > max)
+    			max = unordered[i].length();
+    	
+    	for (int position = max - 1; position >= 0; position--)
+    	{
+    		int[] characters = new int[256];
+    		
+    		for (int i = 0; i < unordered.length; i++)
+    		{
+    			int index = position >= unordered[i].length() ? 0 : unordered[i].charAt(position);
+    			characters[index]++;
+    		}
+    		
+    		for (int i = 1; i < 10; i++)
+    			characters[i] += characters[i - 1];
+    		
+    		if (characters[0] == characters[9])
+    			break;
+    		
+    		for (int i = unordered.length - 1; i >= 0; i--)
+    		{
+    			int index = position >= unordered[i].length() ? 0 : unordered[i].charAt(position);
+    			ordered[--characters[index]] = unordered[i];
+    		}
+    		
+    		String[] temp = ordered;
+    		ordered = unordered;
+    		unordered = temp;
+    	}
+    	
+    	if (unordered != list)
+    		for (int i = 0; i < list.length; i++)
+    			list[i] = unordered[i];
+    }
 }
