@@ -210,3 +210,33 @@ To run algorithm `0`, Counting sort, with input from file `in.txt` to file `out.
 ```
 python assign_03.py 0 < in.txt > out.txt
 ```
+
+## Assignment 04
+
+### Run
+
+```
+python assign_04.py < in.txt
+```
+
+##### Example
+
+To run with input from file `in.txt`:
+
+```
+python assign_04.py < in.txt
+```
+
+As output:
+
+```
+Found an integer
+Size: 1000000, Range: 1999999
+Chosen algorithm: Quick sort
+Time: 115 ms
+```
+
+The first line shows the type found.
+The second shows the size and range, it the type found was an integer or float.
+The third shows the algorithm chosen to sort the data.
+And the last line shows the time needed to run the algorithm.
