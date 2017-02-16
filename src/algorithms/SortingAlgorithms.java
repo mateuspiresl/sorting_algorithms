@@ -377,10 +377,10 @@ public class SortingAlgorithms {
     			characters[index]++;
     		}
     		
-    		for (int i = 1; i < 10; i++)
+    		for (int i = 1; i < 256; i++)
     			characters[i] += characters[i - 1];
     		
-    		if (characters[0] == characters[9])
+    		if (characters[0] == characters[255])
     			break;
     		
     		for (int i = unordered.length - 1; i >= 0; i--)
@@ -398,4 +398,27 @@ public class SortingAlgorithms {
     		for (int i = 0; i < list.length; i++)
     			list[i] = unordered[i];
     }
+    
+    public static <T extends Comparable<T>> void shell(T list[])
+	{
+		int h = 1;
+		
+		while (h < list.length / 3)
+			h = h * 3 + 1;
+		
+		while (h > 0) {
+			for(int i = h; i < list.length; i++)
+			{
+				T aux = list[i];
+				
+				int j;
+				for (j = i; j >= h && list[j - h].compareTo(aux) > 0; j-= h)
+					list[j] = list[j - h];
+				
+				list[j] = aux;
+			}
+			
+			h /= 3;
+		}
+	}
 }

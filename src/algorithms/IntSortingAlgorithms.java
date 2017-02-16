@@ -257,6 +257,7 @@ public class IntSortingAlgorithms {
     public static void bucket(int[] list, int max)
     {
     	int numBuckets = Math.min(max / 5, list.length / 10);
+    	if (numBuckets == 0) numBuckets = 1;
     	// int bestCapacity = list.length / numBuckets;
     	
     	@SuppressWarnings("unchecked")
@@ -298,7 +299,7 @@ public class IntSortingAlgorithms {
     		for (int i = 0; i < unordered.length; i++)
     		{
     			int index = unordered[i] % (power * 10) / power;
-    			numbers[index]++;
+    			numbers[index < 0 ? -index : index]++;
     		}
     		
     		for (int i = 1; i < 10; i++)
@@ -310,7 +311,7 @@ public class IntSortingAlgorithms {
     		for (int i = unordered.length - 1; i >= 0; i--)
     		{
     			int index = unordered[i] % (power * 10) / power;
-    			ordered[--numbers[index]] = unordered[i];
+    			ordered[--numbers[index < 0 ? -index : index]] = unordered[i];
     		}
     		
     		int[] temp = ordered;
@@ -318,7 +319,31 @@ public class IntSortingAlgorithms {
     		unordered = temp;
     	}
     	
-    	if (unordered != list)
+    	int positiveOffset = 0;
+    	
+    	for (int i = 0; i < unordered.length; i++)
+    		if (unordered[i] < 0)
+    			positiveOffset++;
+    	
+    	if (positiveOffset > 0)
+    	{
+    		int negative = positiveOffset - 1;
+    		int positive = 0;
+    		
+    		for (int i = 0; i < unordered.length; i++)
+    			if (unordered[i] < 0)
+    				ordered[negative--] =  unordered[i];
+    			else
+    				ordered[positiveOffset + positive++] = unordered[i];
+    		
+    		if (list == ordered) return;
+    		
+    		int[] temp = ordered;
+    		ordered = unordered;
+    		unordered = temp;
+    	}
+    	
+    	if (list != unordered)
     		for (int i = 0; i < list.length; i++)
     			list[i] = unordered[i];
     }

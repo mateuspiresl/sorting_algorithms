@@ -3,6 +3,7 @@ package assignments;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import algorithms.IntSortingAlgorithmRunner;
@@ -48,6 +49,21 @@ public class Assignment04
 				}
 			},
 			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] list) {
+					SortingAlgorithms.merge(list);
+				}
+			},
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] list) {
+					SortingAlgorithms.heap(list);
+				}
+			},
+			new SortingAlgorithmRunner() {
+				public <T extends Comparable<T>> void run(T[] list) {
+					SortingAlgorithms.shell(list);
+				}
+			},
+			new SortingAlgorithmRunner() {
 				public <T extends Comparable<T>> void run(T[] list)
 				{
 					if (!(list instanceof String[]))
@@ -69,6 +85,9 @@ public class Assignment04
 	
 	public static final String[] stringAlgorithmsNames = new String[] {
 			"Quicksort",
+			"Merge sort",
+			"Heap sort",
+			"Shell sort",
 			"Radix sort"
 	};
 	
@@ -85,24 +104,24 @@ public class Assignment04
 		int index = 0;
 		int algorithmNumber = ALL;
 		
-		while (true)
+		while (index < args.length)
 		{
-			if (args.length > 0 && args[index].equalsIgnoreCase("--commented"))
+			if (args[index].equalsIgnoreCase("--commented"))
 			{
 				commentsAllowed = true;
 				comment("Output commented");
 			}
-			else if (args.length > 0 && args[index].equalsIgnoreCase("--csv"))
+			else if (args[index].equalsIgnoreCase("--csv"))
 			{
 				csvOutput = true;
 				comment("CSV output");
 			}
-			else if (args.length > 0 && args[index].equalsIgnoreCase("--string"))
+			else if (args[index].equalsIgnoreCase("--string"))
 			{
 				stringInput = true;
 				comment("String input");
 			}
-			else if (args.length > 0 && args[index].startsWith("--runs="))
+			else if (args[index].startsWith("--runs="))
 			{
 				numberOfRuns = Integer.parseInt(args[index].substring(7, args[index].length()));
 				comment("Set number of runs to " + numberOfRuns);
@@ -141,6 +160,8 @@ public class Assignment04
 			
 			index++;
 		}
+		
+		comment("All flags processed");
 		
 		if (args.length == 0 || args[index].equalsIgnoreCase("--test"))
 		{
@@ -219,18 +240,32 @@ public class Assignment04
 		int[] data = new int[size];
 		
 		for (int i = 0; i < size; i++)
-			data[size] = scanner.nextInt();
+			data[i] = scanner.nextInt();
 		
 		return data;
 	}
 	
 	private static String[] readStrings(Scanner scanner)
 	{
-		int size = scanner.nextInt();
+		int size = 0;
+		
+		do try { size = scanner.nextInt(); }
+		catch (InputMismatchException ime) { }
+		while (size == 0 && scanner.hasNext());
+		
+		comment("Reading " + size + " entries");
+		
 		String[] data = new String[size];
 		
+		scanner.skip("\\s");
+		
 		for (int i = 0; i < size; i++)
+		{
 			data[i] = scanner.nextLine();
+			
+			// Fix std input
+			if (data[i].isEmpty()) i--;
+		}
 		
 		return data;
 	}
