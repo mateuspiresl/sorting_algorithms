@@ -1,8 +1,8 @@
-# java -cp ./bin assignments.Assignment03 0 --std < assignments/assign_02.in.txt > assignments/assign_02.myout.txt
+# java -cp ../bin assignments.n04.Heuristic
 
 import subprocess
 import sys
 import shlex
 
-cmd = 'java -cp ../bin assignments.Assignment04Heuristic'
+cmd = 'java -cp ../bin assignments.n04.Heuristic'
 subprocess.call(shlex.split(cmd), shell=True)
