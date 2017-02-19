@@ -25,7 +25,7 @@ public class Test {
 			{
 				if (Heuristic.choiceOnly)
 				{
-					char result = Heuristic.chooseForInteger(length, range).charAt(0);
+					char result = Heuristic.chooseForInteger(length, range).name.charAt(0);
 					System.out.print(range != params[0] ? "," + result : result);
 				}
 				else
