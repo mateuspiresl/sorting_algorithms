@@ -243,7 +243,7 @@ public class Heuristic
 	}
 	
 	public static String chooseForString(int size) {
-		return size >= 10000 ? ALG_QUICK : ALG_RADIX;
+		return size >= 10000 ? ALG_QUICK : ALG_HEAP;
 	}
 	
 	public static long run(String heuristic, String[] vector, String[] sorted) throws AlgorithmResultException
