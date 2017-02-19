@@ -15,10 +15,11 @@ public class Heuristic
 	public static boolean all = false;
 	public static boolean check = false;
 	public static boolean resultOnly = false;
-	public static boolean choiceOnly = false;
 	
 	public static void main(String[] args)
 	{
+		boolean choiceOnly = false;
+		
 		int index = 0;
 		while (index < args.length)
 		{
@@ -154,14 +155,10 @@ public class Heuristic
 	
 	public static Algorithms chooseForInteger(int size, int range)
 	{
-		if ((range <= size * 10 && size < 1000000) || range < size)
+		if ((range <= size * 10 && size < 1000000) || range <= size * 0.25)
 			return Algorithms.CountingSort;
-		
-		else if (size < 1000000)
-			return Algorithms.QuickSort;
-		
 		else
-			return Algorithms.RadixSort;
+			return Algorithms.QuickSort;
 	}
 	
 	public static long run(Algorithms algorithm, int[] vector, int[] sorted) throws AlgorithmResultException

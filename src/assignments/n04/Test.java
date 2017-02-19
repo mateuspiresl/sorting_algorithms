@@ -1,9 +1,6 @@
 package assignments.n04;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-
+import algorithms.Algorithms;
 import algorithms.Util;
 
 public class Test {
@@ -15,33 +12,42 @@ public class Test {
 	public static void main(String[] args)
 	{
 		Heuristic.resultOnly = true;
+		boolean choiceOnly = false;
+		int runs = 1; 
 		
-		if (args.length > 0 && args[0].equalsIgnoreCase("--choice"))
-			Heuristic.choiceOnly = true;
+		int index = 0;
+		while (index < args.length)
+		{
+			if (args[index].equalsIgnoreCase("--choice"))
+				choiceOnly = true;
+			
+			else if (args[index].startsWith("--runs="))
+				runs = Integer.valueOf(args[index].substring(7));
+			
+			index++;
+		}
 		
 		for (int length : params)
 		{
 			for (int range : params)
 			{
-				if (Heuristic.choiceOnly)
+				if (choiceOnly)
 				{
 					char result = Heuristic.chooseForInteger(length, range).name.charAt(0);
 					System.out.print(range != params[0] ? "," + result : result);
 				}
 				else
 				{
-					int[] data = Util.generateRandomIntegers(length, false, range);
+					long time = 0;
 					
-					StringBuilder inputString = new StringBuilder();
-					inputString.append(length + "\n");
+					for (int i = 0; i < runs; i++)
+					{
+						int[] data = Util.generateRandomIntegers(length, true, range);
+						Algorithms algorithm = Heuristic.chooseForInteger(length, range);
+						time += Heuristic.run(algorithm, data, null);
+					}
 					
-					for (int element : data)
-						inputString.append(element + "\n");
-					
-					byte[] inputBytes = inputString.toString().getBytes(StandardCharsets.UTF_8);
-					InputStream input = new ByteArrayInputStream(inputBytes);
-					
-					long time = Heuristic.heuristic(input, false).time;
+					time /= runs;
 					System.out.print(range != params[0] ? "," + time : time);
 				}
 			}

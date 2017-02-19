@@ -1,4 +1,7 @@
 package algorithms;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.Random;
 
@@ -81,6 +84,25 @@ public class Util {
 		}
 		
 		return data;
+	}
+	
+	public static InputStream generateRandomIntegersInput(int size, boolean signed, int mod)
+	{
+		StringBuilder inputString = new StringBuilder();
+		inputString.append(size + "\n");
+		
+		Random rnd = new Random();
+		
+		while (--size >= 0)
+		{			
+			int value = rnd.nextInt() % mod;
+			if (!signed && value < 0) value = -value;
+			
+			inputString.append(value + "\n");
+		}
+		
+		byte[] inputBytes = inputString.toString().getBytes(StandardCharsets.UTF_8);
+		return new ByteArrayInputStream(inputBytes);
 	}
 	
 }
