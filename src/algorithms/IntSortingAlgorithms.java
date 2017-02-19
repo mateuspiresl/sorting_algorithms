@@ -373,4 +373,23 @@ public class IntSortingAlgorithms {
 			h /= 3;
 		}
 	}
+	
+	public static <T extends Comparable<T>> void sort(Algorithms algorithm, int list[])
+    {
+    	switch (algorithm)
+    	{
+    	case InsertionSort:	insertion(list);	break;
+    	case SelectionSort:	selection(list);	break;
+    	case QuickSort:		quick(list);		break;
+    	case MergeSort:		merge(list);		break;
+    	case HeapSort:		heap(list);			break;
+    	case ShellSort:		shell(list);		break;
+    	case CountingSort:	counting(list);		break;
+    	case BucketSort:	bucket(list);		break;
+    	case RadixSort:		radix(list);		break;
+    	
+    	default:
+    		throw new NotSupportedAlgorithm();
+    	}
+    }
 }

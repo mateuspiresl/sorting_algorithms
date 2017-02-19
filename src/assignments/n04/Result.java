@@ -1,11 +1,13 @@
 package assignments.n04;
 
+import algorithms.Algorithms;
+
 public class Result
 {
-	public final String algorithm;
+	public final Algorithms algorithm;
 	public final long time;
 	
-	public Result(String algorithm, long time)
+	public Result(Algorithms algorithm, long time)
 	{
 		this.algorithm = algorithm;
 		this.time = time;

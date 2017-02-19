@@ -184,6 +184,7 @@ public class SortingAlgorithms {
 
         for (int i = list.length - 1; i > 0; i--)
         {
+        	heap_swaps++;
         	swap(list, i, 0);
         	heap_lower(list, 0, --limit);
         }
@@ -195,11 +196,17 @@ public class SortingAlgorithms {
 		
         while (child < limit)
         {
-            if (child + 1 < limit && list[child].compareTo(list[child + 1]) < 0)
-                child++;
+            if (child + 1 < limit)
+            {
+            	heap_count++;
+            	if (list[child].compareTo(list[child + 1]) < 0)
+            		child++;
+            }
             
+            heap_count++;
             if (list[child].compareTo(list[index]) > 0)
             {
+            	heap_swaps++;
                 swap(list, child, index);
                 index = child;
                 child = 2 * child + 1;
@@ -207,18 +214,19 @@ public class SortingAlgorithms {
             else break;
         }
 	}
+	
+	public static int heap_count = 0;
+	public static int heap_swaps = 0;
 
 	public static <T extends Comparable<T>> void heap(List<T> list)
 	{
 		for (int i = list.size() / 2 - 1; i >= 0; i--)
 			heap_lower(list, i, list.size());
-		
-        int limit = list.size();
 
         for (int i = list.size() - 1; i > 0; i--)
         {
         	swap(list, i, 0);
-        	heap_lower(list, 0, --limit);
+        	heap_lower(list, 0, i);
         }
 	}
 	
@@ -229,7 +237,6 @@ public class SortingAlgorithms {
         while (child < limit)
         {
             if (child + 1 < limit && list.get(child).compareTo(list.get(child + 1)) < 0)
-                child++;
             
             if (list.get(child).compareTo(list.get(index)) > 0)
             {
@@ -266,8 +273,11 @@ public class SortingAlgorithms {
         }
     }
  
+    public static int quick_count = 0;
+    public static int quick_swaps = 0;
+    
     /**
-     * Divide a subarray in two groups, one smaller than the pivot,
+     * Divide a subarray in two groups, one smaller than the pivot
      * and one larger. The pivot is the last element.
      * @param items the array being sorted.
      * @param begin the first element index of the subarray.
@@ -281,16 +291,20 @@ public class SortingAlgorithms {
         int marker = begin;
         
         // Puts all elements smaller than the pivot, before the marker
-        for (int i = begin; i < end; i++) {
+        for (int i = begin; i < end; i++)
+        {
+        	quick_count++;
             if (items[i].compareTo(pivot) <= 0)
             {
+            	quick_swaps++;
                 swap(items, marker, i);
                 marker++;
             }
         }
 
         // The marker is the first element larger than the pivot
-        // Makes the pivot be between the division 
+        // Makes the pivot be between the division
+        quick_swaps++;
         swap(items, marker, end);
         
         // After the movement, the marker points to the pivot
@@ -421,4 +435,64 @@ public class SortingAlgorithms {
 			h /= 3;
 		}
 	}
+    
+    public static <T extends Comparable<T>> void shell(List<T> list)
+	{
+		int h = 1;
+		
+		while (h < list.size() / 3)
+			h = h * 3 + 1;
+		
+		while (h > 0) {
+			for(int i = h; i < list.size(); i++)
+			{
+				T aux = list.get(i);
+				
+				int j;
+				for (j = i; j >= h && list.get(j - h).compareTo(aux) > 0; j-= h)
+					list.set(j, list.get(j - h));
+				
+				list.set(j, aux);
+			}
+			
+			h /= 3;
+		}
+	}
+    
+    public static <T extends Comparable<T>> void sort(Algorithms algorithm, T list[])
+    {
+    	switch (algorithm)
+    	{
+    	case InsertionSort:	insertion(list);	break;
+    	case SelectionSort:	selection(list);	break;
+    	case QuickSort:		quick(list);		break;
+    	case MergeSort:		merge(list);		break;
+    	case HeapSort:		heap(list);			break;
+    	case ShellSort:		shell(list);		break;
+    	
+    	case RadixSort:
+    		if (list instanceof String[])
+    			radix((String[]) list);
+    		break;
+    		
+    	default:
+    		throw new NotSupportedAlgorithm();
+    	}
+    }
+    
+    public static <T extends Comparable<T>> void sort(Algorithms algorithm, List<T> list)
+    {
+    	switch (algorithm)
+    	{
+    	case InsertionSort:	insertion(list);	break;
+    	case SelectionSort:	selection(list);	break;
+    	case QuickSort:		quick(list);		break;
+    	case MergeSort:		merge(list);		break;
+    	case HeapSort:		heap(list);			break;
+    	case ShellSort:		shell(list);		break;
+    		
+    	default:
+    		throw new NotSupportedAlgorithm();
+    	}
+    }
 }

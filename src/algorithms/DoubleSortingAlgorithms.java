@@ -205,4 +205,20 @@ public class DoubleSortingAlgorithms {
 			h /= 3;
 		}
 	}
+	
+	public static <T extends Comparable<T>> void sort(Algorithms algorithm, double list[])
+    {
+    	switch (algorithm)
+    	{
+    	case InsertionSort:	insertion(list);	break;
+    	case SelectionSort:	selection(list);	break;
+    	case QuickSort:		quick(list);		break;
+    	case MergeSort:		merge(list);		break;
+    	case HeapSort:		heap(list);			break;
+    	case ShellSort:		shell(list);		break;
+    	
+    	default:
+    		throw new NotSupportedAlgorithm();
+    	}
+    }
 }
