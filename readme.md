@@ -231,12 +231,16 @@ As output:
 
 ```
 Found an integer
-Size: 1000000, Range: 1999999
-Chosen algorithm: Quick sort
-Time: 115 ms
+Size: 100000
+Range: 199995
+Chosen algorithm: Counting sort
+Time: 14 ms
 ```
 
 The first line shows the type found.
-The second shows the size and range, it the type found was an integer or float.
-The third shows the algorithm chosen to sort the data.
+The second shows the size.
+The third line shows the range, if the type found was an integer.
+The next one shows the algorithm chosen to sort the data.
 And the last line shows the time needed to run the algorithm.
+
+If the data was already ordered, the chosen algorithm will be _None_.
