@@ -155,7 +155,7 @@ public class Heuristic
 	
 	public static Algorithms chooseForInteger(int size, int range)
 	{
-		if ((range <= size * 10 && size < 1000000) || range <= size * 0.25)
+		if (range <= size * 25)
 			return Algorithms.CountingSort;
 		else
 			return Algorithms.QuickSort;
