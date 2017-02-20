@@ -155,7 +155,12 @@ public class Heuristic
 	
 	public static Algorithms chooseForInteger(int size, int range)
 	{
-		if (range <= size * 25)
+		Runtime runtime = Runtime.getRuntime();
+		
+		long allocatedMemory = runtime.totalMemory() - runtime.freeMemory();
+		long presumableFreeMemory = runtime.maxMemory() - allocatedMemory;
+		
+		if (range <= size * 25 && range < presumableFreeMemory / 4)
 			return Algorithms.CountingSort;
 		else
 			return Algorithms.QuickSort;
